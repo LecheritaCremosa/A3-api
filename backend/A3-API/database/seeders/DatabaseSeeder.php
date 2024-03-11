@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
        
-        /*Instructor::factory()->create([
+       /* Instructor::factory()->create([
             'type' => 'Contratista',
             'profile' => 'Instructor De Programación']);
 
@@ -46,15 +46,14 @@ class DatabaseSeeder extends Seeder
             'profile' => 'Instructor De Educación Fisica'
         ]);
 
-        //User::factory(5)->create();
+        User::factory(5)->create();*/
 
 
         $this->call(CareerSeeder::class);
         $this->call(CourseSeeder::class);
-        $this->call(EnvironmentTypeSeeder::class);*/
-        
-        //$this->call(LocationSeeder::class);
-        //$this->call(LearningEnvironmentSeeder::class);
+        $this->call(EnvironmentTypeSeeder::class);   
+        $this->call(LocationSeeder::class);
+        $this->call(LearningEnvironmentSeeder::class);
         $this->call(SchedulingEnvironmentSeeder::class);
     }
 }

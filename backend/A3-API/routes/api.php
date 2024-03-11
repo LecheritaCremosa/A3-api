@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\CareerController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EnvironmentTypeController;
+use App\Http\Controllers\InstructorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +21,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('career', CareerController::class);
+Route::apiResource('course', CourseController::class);
+Route::apiResource('environment_type', EnvironmentTypeController::class);
+Route::apiResource('instructor', InstructorController::class);

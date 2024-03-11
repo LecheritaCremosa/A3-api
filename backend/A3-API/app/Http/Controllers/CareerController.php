@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Career;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -36,7 +37,8 @@ class CareerController extends Controller
      */
     public function index()
     {
-        //
+        $careers = Career::all();
+        return response()->json($careers, Response::HTTP_OK);
     }
 
     /**
@@ -44,30 +46,58 @@ class CareerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->applyValidator($request);
+        if(!empty($data))
+        {
+            return $data;
+        }
+        $career = Career::create($request->all());
+        $response = [
+            'message' => 'Registro creado exitosamente',
+            'observation' => $career
+
+        ];
+        return response()->json($response, Response::HTTP_CREATED);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Career $career)
     {
-        //
+        return response()->json($career, Response::HTTP_OK );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Career $career)
     {
-        //
+        $data = $this->applyValidator($request);
+        if(!empty($data))
+        {
+            return $data;
+        }
+        $career->update($request->all());
+        $response = [
+            'message' => 'Registro actualizado exitosamente',
+            'causal' => $career
+
+        ];
+        return response()->json($response, Response::HTTP_OK);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Career $career)
     {
-        //
+        $career->delete();
+        $response = [
+            'message' => 'Registro eliminado exitosamente',
+            'causal' => $career
+
+        ];
+        return response()->json($response, Response::HTTP_OK);
     }
 }
