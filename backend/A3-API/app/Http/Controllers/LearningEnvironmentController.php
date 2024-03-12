@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LearningEnvironment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -48,7 +49,9 @@ class LearningEnvironmentController extends Controller
      */
     public function index()
     {
-        //
+        $learning_environments = LearningEnvironment::all();
+        $learning_environments->load(['environment_type', 'location']);
+        return response()->json($learning_environments, Response::HTTP_OK);
     }
 
     /**
@@ -56,30 +59,59 @@ class LearningEnvironmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->applyValidator($request);
+        if(!empty($data))
+        {
+            return $data;
+        }
+        $learning_environment = LearningEnvironment::create($request->all());
+        $response = [
+            'message' => 'Registro creado exitosamente',
+            'observation' => $learning_environment
+
+        ];
+        return response()->json($response, Response::HTTP_CREATED);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(LearningEnvironment $learning_environment)
     {
-        //
+        $learning_environment->load(['environment_type', 'location']);
+        return response()->json($learning_environment, Response::HTTP_OK );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, LearningEnvironment $learning_environment)
     {
-        //
+        $data = $this->applyValidator($request);
+        if(!empty($data))
+        {
+            return $data;
+        }
+        $learning_environment->update($request->all());
+        $response = [
+            'message' => 'Registro actualizado exitosamente',
+            'leatning_environment' => $learning_environment
+
+        ];
+        return response()->json($response, Response::HTTP_OK);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(LearningEnvironment $learning_environment)
     {
-        //
+        $learning_environment->delete();
+        $response = [
+            'message' => 'Registro eliminado exitosamente',
+            'causal' => $learning_environment
+
+        ];
+        return response()->json($response, Response::HTTP_OK);
     }
 }

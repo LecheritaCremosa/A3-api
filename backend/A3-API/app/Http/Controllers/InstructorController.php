@@ -13,7 +13,7 @@ class InstructorController extends Controller
         'document' => 'required|integer|min:1|max:99999999999999999999',
         'fullname' => 'required|string|min:10|max:50',
         'sena_email' => 'required|string|email|unique:instructor|max:40',
-        'personal_email' => 'required|string|email|unique:instructors|max:50',
+        'personal_email' => 'required|string|email|unique:instructor|max:50',
         'phone' => 'required|string|max:30',
         'password' => 'required|string|min:8|max:255',
         'type' => 'required|string|min:3|max:255',
